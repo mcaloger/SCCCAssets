@@ -7,11 +7,12 @@ public class AssetModel {
     private String room;
     private String category;
     private String hostname;
+    private String model;
 
     public AssetModel() {
     }
 
-    public AssetModel(int id, String serialNumber, String building, String room, String category, String hostname) {
+    public AssetModel(int id, String serialNumber, String building, String room, String category, String hostname, String model) {
         this.id = id;
         this.serialNumber = serialNumber;
         this.building = building;
@@ -74,5 +75,13 @@ public class AssetModel {
 
     public void setHostname(String hostname) {
         this.hostname = hostname;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 }
