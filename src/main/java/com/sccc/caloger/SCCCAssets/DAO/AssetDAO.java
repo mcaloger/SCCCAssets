@@ -8,11 +8,12 @@ import java.util.ArrayList;
 
 public class AssetDAO {
 
-    public static ArrayList<AssetModel> getAll() throws SQLException{
+    public ArrayList<AssetModel> getAll() throws SQLException{
+        MySQLConnector mySQLConnector = new MySQLConnector();
         ArrayList<AssetModel> output = new ArrayList<>();
         String query = "SELECT * FROM Assets";
         try(
-                Connection conn = MySQLConnector.getSQLConnection();
+                Connection conn = mySQLConnector.getSQLConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
         ) {
@@ -35,11 +36,12 @@ public class AssetDAO {
         return output;
     }
 
-    public static AssetModel getOne(int id) {
+    public AssetModel getOne(int id) {
+        MySQLConnector mySQLConnector = new MySQLConnector();
         AssetModel output = new AssetModel();
         String query = "SELECT * FROM Assets WHERE id = ?";
         try(
-                Connection conn = MySQLConnector.getSQLConnection();
+                Connection conn = mySQLConnector.getSQLConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
         ) {
             stmt.setInt(1, id);
@@ -71,7 +73,8 @@ public class AssetDAO {
         return output;
     }
 
-    public static void updateOne (int id, AssetModel assetModel) {
+    public void updateOne (int id, AssetModel assetModel) {
+        MySQLConnector mySQLConnector = new MySQLConnector();
         String query = "UPDATE Assets " +
                 "SET " +
                 "SerialNumber = ?, " +
@@ -82,7 +85,7 @@ public class AssetDAO {
                 "Model = ?" +
                 "WHERE id = ?";
         try(
-                Connection conn = MySQLConnector.getSQLConnection();
+                Connection conn = mySQLConnector.getSQLConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
         ) {
             stmt.setString(1, assetModel.getSerialNumber());
@@ -95,19 +98,20 @@ public class AssetDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("SQLException on AssetDAO.Update():");
+            System.out.println("SQLException on AssetDAO.update():");
             System.out.println(e);
             System.out.println();
         }
     }
 
-    public static void create(AssetModel assetModel) {
+    public void create(AssetModel assetModel) {
+        MySQLConnector mySQLConnector = new MySQLConnector();
         String query = "INSERT INTO Assets " +
                 "(SerialNumber, Building, Room, Category, Hostname, Model) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try(
-                Connection conn = MySQLConnector.getSQLConnection();
+                Connection conn = mySQLConnector.getSQLConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
         ) {
             stmt.setString(1, assetModel.getSerialNumber());
@@ -121,7 +125,7 @@ public class AssetDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("SQLException on AssetDAO.Update():");
+            System.out.println("SQLException on AssetDAO.create():");
             System.out.println(e);
             System.out.println();
         }

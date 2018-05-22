@@ -16,16 +16,20 @@ public class AssetController {
 
     @GetMapping("/all")
     ArrayList<AssetModel> getAll() throws SQLException {
-        return AssetDAO.getAll();
+        AssetDAO assetDAO = new AssetDAO();
+        return assetDAO.getAll();
     }
 
     @GetMapping("/{assetId}")
     private AssetModel getOne(@PathVariable("assetId") int id) throws SQLException {
-        return AssetDAO.getOne(id);
+        AssetDAO assetDAO = new AssetDAO();
+        return assetDAO.getOne(id);
     }
 
     @PostMapping("/{assetId}")
     private void update(@PathVariable("assetId") int id, @RequestBody Map<String, Object> payload) throws SQLException {
+        AssetDAO assetDAO = new AssetDAO();
+
         AssetModel assetModel = new AssetModel();
         assetModel.setSerialNumber((String) payload.get("SerialNumber"));
         assetModel.setBuilding((String) payload.get("Building"));
@@ -34,11 +38,13 @@ public class AssetController {
         assetModel.setHostname((String) payload.get("Hostname"));
         assetModel.setModel((String) payload.get("Model"));
 
-        AssetDAO.updateOne(id, assetModel);
+        assetDAO.updateOne(id, assetModel);
     }
 
     @PostMapping("/create")
     private void create(@RequestBody Map<String, Object> payload) {
+        AssetDAO assetDAO = new AssetDAO();
+
         AssetModel assetModel = new AssetModel();
         assetModel.setSerialNumber((String) payload.get("SerialNumber"));
         assetModel.setBuilding((String) payload.get("Building"));
@@ -47,6 +53,6 @@ public class AssetController {
         assetModel.setHostname((String) payload.get("Hostname"));
         assetModel.setModel((String) payload.get("Model"));
 
-        AssetDAO.create(assetModel);
+        assetDAO.create(assetModel);
     }
 }
