@@ -10,16 +10,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Configuration
+
 public class MySQLConnector {
 
-    private String url = "jdbc:mysql://localhost:32768/SCCCAssets";
-    private String user = "root";
-    private String password = "password1";
-
     public Connection getSQLConnection () throws SQLException {
-        // Exposing database secrets only for testing, will pull out into env variables later.
-
+        String url = DataConfiguration.url;
+        String user = DataConfiguration.user;
+        String password = DataConfiguration.password;
         Connection conn = DriverManager.getConnection(url, user, password);
         return conn;
     }
