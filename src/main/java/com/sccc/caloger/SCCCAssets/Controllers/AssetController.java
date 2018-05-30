@@ -26,6 +26,8 @@ public class AssetController {
         return assetDAO.getOne(id);
     }
 
+
+
     @PostMapping("/{assetId}")
     private void update(@PathVariable("assetId") int id, @RequestBody Map<String, Object> payload) throws SQLException {
         AssetDAO assetDAO = new AssetDAO();
@@ -54,5 +56,10 @@ public class AssetController {
         assetModel.setModel((String) payload.get("Model"));
 
         assetDAO.create(assetModel);
+    }
+
+    @GetMapping("/{assetId}/comments")
+    private void getCommentsFromAssetId(@PathVariable("assetId") int id) throws SQLException {
+
     }
 }
